@@ -1,0 +1,43 @@
+
+代码的目标：判断一个串是否为某个基本串的简单复制构成的。
+
+例如：
+abcabcabc，它由“abc”复制3次构成，则程序输出：abc
+aa 由“a”复制两次构成，则程序输出：a
+axa 不是简单复制构成，则不输出任何信息
+aaxx 也不是仅仅由简单复制构成，不输出信息。
+
+请阅读下面的代码，填写缺失的部分（下划线部分）。
+
+注意：请把填空的答案（仅填空处的答案，不包括题面）存入考生文件夹下对应题号的“解答.txt”中即可。
+直接写在题面中不能得分。
+
+public class DaSai
+{
+	public static void findRepeat(String x)
+	{
+		for(int i=1; i<=x.length()/2; i++)
+		{
+			String base = x.substring(0,i);
+			int p = i;
+			for(;;)
+			{
+				if(p+i>x.length()) break;
+				if(x.substring(p,p+i).equals(base)==false) break;
+				________________;   // 填空1
+			}
+			
+			if(______________)  // 填空2
+			{
+				System.out.println(base);
+				break;
+			}
+		}
+	}
+	
+	public static void main(String[] args)
+	{
+		findRepeat("IhaveagoodideaIhaveagoodideaIhaveagoodidea");
+	}
+}
+

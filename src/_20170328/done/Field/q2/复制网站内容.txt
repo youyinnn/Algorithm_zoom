@@ -1,0 +1,19 @@
+	本程序将网站“www.baidu.com”首页的内容复制保存在文件test.html中。
+	写了如下代码，请完善之：
+
+import java.net.*;
+import java.io.*;
+class DaSai{
+	public static void main(String[] args) throws Exception {
+		URL url=__________________________________;
+		BufferedReader in =_________________________________;
+		String inString;     
+		File outfile=new File("test.html");	  
+		PrintWriter out=new PrintWriter(new FileWriter(outfile));
+		while ((inString=in.readLine())!=null){ 
+               out.println(inString);
+		}
+		in.close(); 
+		out.close();
+     }
+ }
