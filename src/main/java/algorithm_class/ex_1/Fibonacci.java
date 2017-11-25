@@ -1,5 +1,7 @@
 package algorithm_class.ex_1;
 
+import org.junit.Test;
+
 /**
  * The type Fibonacci.
  *
@@ -42,12 +44,12 @@ public class Fibonacci {
     }
 
     /**
-     * 迭代法(iteration)
+     * int级迭代法(iteration)
      *
      * @param n the n
      * @return long int
      */
-    public static int iteration2FibonacciForInt(int n){
+    public static int iteration2FibonacciForInt(long n){
 
         int fibonacci = 0;
         int fa = 1;
@@ -60,7 +62,7 @@ public class Fibonacci {
         }
 
 
-        for (int i = 2; i <= n ; ++i) {
+        for (long i = 2; i <= n ; ++i) {
             fibonacci = fa + fb;
             fb = fa;
             fa = fibonacci;
@@ -70,7 +72,7 @@ public class Fibonacci {
     }
 
     /**
-     * 迭代法(iteration)
+     * long级迭代法(iteration)
      *
      * @param n the n
      * @return long long
@@ -98,7 +100,7 @@ public class Fibonacci {
     }
 
     /**
-     * Limit fibonacci for int int.
+     * int级最大斐波那契数
      *
      * the limit fibonacci for int is 46
      * @return the int
@@ -115,7 +117,7 @@ public class Fibonacci {
     }
 
     /**
-     * Limit fibonacci for long int.
+     * long级最大斐波那契数
      *
      * the limit fibonacci for int is 92
      * @return the int
@@ -132,7 +134,7 @@ public class Fibonacci {
     }
 
     /**
-     * Time fibonacci for int long.
+     * 递归法计算最大Int需要多长时间
      *
      * 9k ms 左右
      * @return the long
@@ -148,12 +150,12 @@ public class Fibonacci {
     }
 
     /**
-     * Time fibonacci for int long.
+     * 递归法计算long级以内的第n个斐波那契数需要多长时间
      *
      * 8822
      * @return the long
      */
-    public static long timeFibonacciForLong(int n){
+    public static long FibonacciTimeForLongWithRecursion(int n){
 
         long before = System.nanoTime();
 
@@ -163,35 +165,87 @@ public class Fibonacci {
         return after - before;
     }
 
-    public static long maxFibonacciLimitWithTime(int m){
-        long fibonacci = 0L;
-        long fa = 1L;
-        long fb = fibonacci;
+    /**
+     * 递归法计算long级以内的第n个斐波那契数需要多长时间
+     *
+     * 8822
+     * @return the long
+     */
+    public static long FibonacciTimeForLongWithIteration(long n){
 
-        while (true) {
-            fibonacci = fa + fb;
-            fb = fa;
-            fa = fibonacci;
-        }
+        long before = System.nanoTime();
+
+        iteration2FibonacciForInt(n);
+
+        long after = System.nanoTime();
+        return after - before;
     }
 
-    /**
-     * The entry point of application.
-     *
-     * @param args the input arguments
-     */
-    public static void main(String[] args) {
 
-        //System.out.println(limitFibonacciForInt());
-        //System.out.println(limitFibonacciForLong());
+    @Test
+    public void q2(){
 
-        //System.out.println(timeFibonacciForInt());
+        System.out.println(limitFibonacciForInt());
 
-        int i = 0;
-        while (true) {
-            System.out.println("计算第"+i+"个斐波那契需要："+timeFibonacciForLong(i) * 0.000000001+" s");
-            i++;
-        }
+        System.out.println(limitFibonacciForLong());
+    }
+
+    @Test
+    public void q3(){
+
+        System.out.println(timeFibonacciForInt() * 0.000000001 );
+
+    }
+
+    @Test
+    public void q4_1(){
+
+        // 递归法
+
+        // 1s
+        //System.out.println(FibonacciTimeForLongWithRecursion(41) * 0.000000001);
+
+        // 5s
+        //System.out.println(FibonacciTimeForLongWithRecursion(44) * 0.000000001);
+
+        // 10s
+        //System.out.println(FibonacciTimeForLongWithRecursion(46) * 0.000000001);
+
+        // 50s
+        System.out.println(FibonacciTimeForLongWithRecursion(49) * 0.000000001);
+
+    }
+
+    @Test
+    public void q4_2(){
+
+        // 迭代法
+
+        //1s
+        //System.out.println(FibonacciTimeForLongWithIteration(360000000L) * 0.000000001);
+
+        //5s
+        //System.out.println(FibonacciTimeForLongWithIteration(4000000000L) * 0.000000001);
+
+
+        //10s
+        //System.out.println(FibonacciTimeForLongWithIteration(3977777777L) * 0.000000001);
+
+        //50s
+        System.out.println(FibonacciTimeForLongWithIteration(17700000000L) * 0.000000001);
+    }
+
+    public double getFibonacciByFormula(int n) {
+
+        double sqrtFive = Math.sqrt(5.0);
+
+        double a = 1 / sqrtFive;
+
+        double b = Math.pow(((1.0 + sqrtFive) / 2.0), n);
+
+        double c = Math.pow(((1.0 - sqrtFive) / 2.0), n);
+
+        return a * (b - c);
     }
 
 }
