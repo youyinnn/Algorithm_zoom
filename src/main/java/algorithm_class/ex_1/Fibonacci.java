@@ -149,6 +149,16 @@ public class Fibonacci {
         return after - before;
     }
 
+    public static long timeFibonacciForLong(){
+
+        long before = System.nanoTime();
+
+        recursion2FibonacciForLong(92);
+
+        long after = System.nanoTime();
+        return after - before;
+    }
+
     /**
      * 递归法计算long级以内的第n个斐波那契数需要多长时间
      *
@@ -166,7 +176,7 @@ public class Fibonacci {
     }
 
     /**
-     * 递归法计算long级以内的第n个斐波那契数需要多长时间
+     * 迭代法计算long级以内的第n个斐波那契数需要多长时间
      *
      * 8822
      * @return the long
@@ -235,7 +245,7 @@ public class Fibonacci {
         System.out.println(FibonacciTimeForLongWithIteration(17700000000L) * 0.000000001);
     }
 
-    public double getFibonacciByFormula(int n) {
+    public static double getFibonacciByFormula(int n) {
 
         double sqrtFive = Math.sqrt(5.0);
 
@@ -246,6 +256,10 @@ public class Fibonacci {
         double c = Math.pow(((1.0 - sqrtFive) / 2.0), n);
 
         return a * (b - c);
+    }
+
+    public static void main(String[] args) {
+        System.out.println(getFibonacciByFormula(4));
     }
 
 }
