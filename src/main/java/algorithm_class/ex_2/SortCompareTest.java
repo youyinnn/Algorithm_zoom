@@ -9,22 +9,163 @@ import java.util.Arrays;
  */
 public class SortCompareTest {
 
-    private static int[] arr = {15,1,86,13,32,45,0,-9,11};
+    private static int[] arr = {15,1,86,13,32, 8};
 
+    private static void swap(int[] arr, int a, int b) {
+        int temp = arr[a];
+        arr[a] = arr[b];
+        arr[b] = temp;
+    }
+
+    /**
+     * 冒泡排序
+     * n个元素 i = 0开始
+     * 相邻元素之间两两比较，按照大小顺序作为交换，每一轮比较都把最大的元素安排到但付钱轮次的最后面
+     * @param arr
+     */
     public static void bubbleSort(int[] arr){
-        for (int i = 0; i < arr.length; i++) {
-            if (i == arr.length -1) {
-                break;
-            } else {
-                for (int j = 0 ; j < arr.length - 1 - i; j++) {
-                    if (arr[j] > arr[j+1]) {
-                        arr[j] += arr[j+1];
-                        arr[j+1] = arr[j] - arr[j+1];
-                        arr[j] -= arr[j+1];
-                    }
+        for (int i = 0; i < arr.length - 1; ++i) {
+            for (int j = 0 ; j < arr.length - 1 - i; ++j) {
+                if (arr[j] > arr[j+1]) {
+                    swap(arr, j, j+1);
                 }
             }
         }
+    }
+
+    /**
+     * 选择排序
+     * n个元素 从i = 0 开始扫描
+     * 每次扫描后n-i个元素 选出当前参与扫描的最小值，扫描结束后把最小值放置当前轮次的最前面
+     * @param arr
+     */
+    public static void selectSort(int[] arr){
+        int min;
+        for (int i = 0 ; i < arr.length - 1; ++i) {
+            min = i;
+            for (int j = i + 1 ; j < arr.length ; ++j) {
+                if (arr[min] > arr[j]){
+                    min = j;
+                }
+            }
+            if (i == min) {
+                break;
+            } else {
+                swap(arr, i, min);
+            }
+        }
+    }
+
+    /**
+     * 直接插入排序
+     * 将数组分为两部分，一部分是已经排序好的，另一部分是待插入的数组
+     * 每次从待插入的数组中取出元素和有序数组从后往前进行比较，待插入一个一个往前挤，直到找到合适的位置
+     * 直到待插入部分元素为0
+     * @param arr
+     */
+    public static void straightInsertionSort(int[] arr){
+        for (int i = 1 ; i < arr.length ; ++i) {
+            int v = arr[i];
+            int j = i - 1;
+            while (j >= 0 && arr[j] > v) {
+                arr[j+1] = arr[j];
+                j = j - 1;
+                arr[j + 1] = v;
+            }
+        }
+    }
+
+    /**
+     * 归并排序
+     * 对于需要排序的数组，把它一分为二，递归分
+     * 分到不可再分为止就开始合并，并且是有序地合并
+     * @param arr
+     */
+    public static void mergeSort(int[] arr) {
+        if (arr.length > 1) {
+            int[] brr = new int[arr.length/2];
+            int[] crr = new int[arr.length - arr.length/2];
+            for (int i = 0 ; i < arr.length / 2 ; ++i) {
+                brr[i] = arr[i];
+            }
+            for (int i = 0 ; i < arr.length - arr.length/2 ; ++i) {
+                crr[i] = arr[arr.length/2 + i];
+            }
+
+            mergeSort(brr);
+            mergeSort(crr);
+            merge(brr, crr, arr);
+        }
+    }
+
+    private static void merge(int[] brr, int[] crr, int[] arr){
+        int p = brr.length;
+        int q = crr.length;
+        int i = 0, j = 0, k = 0;
+        while (i < p && j < q) {
+            if (brr[i] <= crr[j]) {
+                arr[k] = brr[i];
+                i++;
+            } else {
+                arr[k] = crr[j];
+                j++;
+            }
+            k++;
+        }
+        int n = k;
+        if (i == p) {
+            for (int m = j ; m < q ; ++m) {
+                arr[n] = crr[m];
+                n++;
+            }
+        } else {
+            for (int m = i ; m < p ; ++m) {
+                arr[n] = brr[m];
+                n++;
+            }
+        }
+    }
+
+    /**
+     * 快速排序
+     * 以arr[l]为左界，arr[r]为右界，选择当前界限内的第一个元素作为分裂点
+     * 从两界向中间扫描为分裂点寻找一个合适的位置，使得分裂点左边的元素都小于等于分裂点
+     * 右边的元素都大于等于分裂点，再递归以分裂点对左右两边的子数组进行划分排序
+     * @param arr
+     * @param l
+     * @param r
+     */
+    public static void quickSort(int[] arr, int l, int r) {
+        int s;
+        if (l < r) {
+            s = hoarePartition(arr, l, r);
+            quickSort(arr, l, s - 1);
+            quickSort(arr, s + 1, r);
+        }
+    }
+
+    private static int hoarePartition(int[] arr, int l, int r) {
+        int p = arr[l];
+        int i = l;
+        int j = r + 1;
+        do {
+            do {
+                i++;
+            } while (arr[i] < p);
+            do {
+                j--;
+            } while (arr[j] > p);
+            swap(arr, i, j);
+        } while (i < j);
+        swap(arr, i, j);
+        swap(arr, l, j);
+
+        return j;
+    }
+
+    public static void heapBottomUp(int[] arr) {
+        int lastParentIndex = (arr.length - 1)/ 2;
+
     }
 
     @Test
@@ -33,5 +174,33 @@ public class SortCompareTest {
         System.out.println(Arrays.toString(arr));
     }
 
+    @Test
+    public void testSelectSort(){
+        selectSort(arr);
+        System.out.println(Arrays.toString(arr));
+    }
 
+    @Test
+    public void testStraightInsertionSort(){
+        straightInsertionSort(arr);
+        System.out.println(Arrays.toString(arr));
+    }
+
+    @Test
+    public void testMergeSort(){
+        mergeSort(arr);
+        System.out.println(Arrays.toString(arr));
+    }
+
+    @Test
+    public void testQuickSort(){
+        quickSort(arr, 0, arr.length - 1);
+        System.out.println(Arrays.toString(arr));
+    }
+
+    @Test
+    public void testHeapSort(){
+        heapBottomUp(arr);
+        System.out.println(Arrays.toString(arr));
+    }
 }
