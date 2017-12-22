@@ -1,5 +1,7 @@
 package filters;
 
+import servlet.ThreadContainer;
+
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -18,6 +20,9 @@ public class ACAOFilters extends HttpFilter {
         request.setCharacterEncoding("UTF-8");
         response.setCharacterEncoding("UTF-8");
         response.setHeader("Access-Control-Allow-Origin", "*");
+
+        ThreadContainer.addThread(Thread.currentThread());
+
         chain.doFilter(request, response);
     }
 }

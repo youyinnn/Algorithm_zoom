@@ -35,22 +35,22 @@ public class ExamServlet extends HttpServlet {
 
         Method routeMethod;
         String s = null;
-        synchronized (this) {
-            try {
-                if (n == null) {
-                    routeMethod = thisClass.getMethod(route);
-                    routeMethod.invoke(instance());
-                } else {
-                    routeMethod = thisClass.getMethod(route, int.class);
-                    routeMethod.invoke(instance(), Integer.parseInt(n));
-                }
-                s = JSON.toJSONString(MsgChannel.readMsg());
-                MsgChannel.clearMsgChannel();
-            } catch (Exception ignore) {
-                ignore.printStackTrace();
-                System.out.println("Not such method");
+        System.out.println(Thread.currentThread());
+        try {
+            if (n == null) {
+                routeMethod = thisClass.getMethod(route);
+                routeMethod.invoke(instance());
+            } else {
+                routeMethod = thisClass.getMethod(route, long.class);
+                routeMethod.invoke(instance(), Long.parseLong(n));
             }
+            s = JSON.toJSONString(MsgChannel.readMsg());
+            MsgChannel.clearMsgChannel();
+        } catch (Exception ignore) {
+            ignore.printStackTrace();
+            System.out.println("Not such method");
         }
+
         resp.getWriter().print(s);
     }
 
@@ -75,21 +75,28 @@ public class ExamServlet extends HttpServlet {
 
         MsgChannel.addMsgLine("递归计算最大long斐波那契数需要时间：" + timeFibonacciForLong);
     }
-    public void f5(int n){
-        double time = Fibonacci.FibonacciTimeForLongWithRecursion(n) * 0.000000001;
+    public void f5(long n){
+        double time = Fibonacci.FibonacciTimeForLongWithRecursion((int) n) * 0.000000001;
 
         MsgChannel.addMsgLine("递归计算第" + n + "个斐波那契数所需时间：" + time);
         System.out.println(MsgChannel.readMsgInRaw());
     }
-    public void f6(){
-        int fibonacciForInt = Fibonacci.limitFibonacciForInt();
+    public void f6(long n){
+        double time = Fibonacci.FibonacciTimeForLongWithIteration(n) * 0.000000001;
 
-        MsgChannel.addMsgLine("Java中Int类型支持的最大斐波那契数是：" + fibonacciForInt);
+        MsgChannel.addMsgLine("迭代计算第" + n + "个斐波那契数所需时间：" + time);
+        System.out.println(MsgChannel.readMsgInRaw());
     }
-    public void f7(){
-        int fibonacciForInt = Fibonacci.limitFibonacciForInt();
+    public void f7(long n){
+        double a = Fibonacci.getFibonacciByFormula((int) n);
 
-        MsgChannel.addMsgLine("Java中Int类型支持的最大斐波那契数是：" + fibonacciForInt);
+        MsgChannel.addMsgLine("公式法计算第" + n + "个斐波那契数值为：" + a);
+    }
+
+    public void stop(){
+        ThreadContainer.threadState();
+        System.out.println("stop");
+        //ThreadContainer.waitAllThread();
     }
 
 }
