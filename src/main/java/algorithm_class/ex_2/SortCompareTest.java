@@ -9,15 +9,17 @@ import java.util.Arrays;
  */
 public class SortCompareTest {
 
-    private static int[] arr = new int[1000];
+    public static int[] arr ;
 
-    static {
-        for (int i = 0 ; i < 1000 ; ++i) {
-            arr[i] = (int) (Math.random()* 1000000);
+    public static int[] getInitedArr(int arrLength){
+        arr = new int[arrLength];
+        for (int i = 0 ; i < arrLength ; ++i) {
+            arr[i] = (int) (Math.random()* 1000);
         }
+        return arr;
     }
 
-    private static long count = 0;
+    public static long count = 0;
 
     private static void swap(int[] arr, int a, int b) {
         int temp = arr[a];
@@ -222,7 +224,7 @@ public class SortCompareTest {
 
     @Test
     public void testBubble(){
-        System.out.println(Arrays.toString(arr));
+        System.out.println(Arrays.toString(getInitedArr(1000)));
         bubbleSort(arr);
         System.out.println(Arrays.toString(arr));
         System.out.println(count);
@@ -230,7 +232,7 @@ public class SortCompareTest {
 
     @Test
     public void testSelectSort(){
-        System.out.println(Arrays.toString(arr));
+        System.out.println(Arrays.toString(getInitedArr(1000)));
         selectSort(arr);
         System.out.println(Arrays.toString(arr));
         System.out.println(count);
@@ -238,7 +240,7 @@ public class SortCompareTest {
 
     @Test
     public void testStraightInsertionSort(){
-        System.out.println(Arrays.toString(arr));
+        System.out.println(Arrays.toString(getInitedArr(1000)));
         straightInsertionSort(arr);
         System.out.println(Arrays.toString(arr));
         System.out.println(count);
@@ -246,7 +248,7 @@ public class SortCompareTest {
 
     @Test
     public void testMergeSort(){
-        System.out.println(Arrays.toString(arr));
+        System.out.println(Arrays.toString(getInitedArr(1000)));
         mergeSort(arr);
         System.out.println(Arrays.toString(arr));
         System.out.println(count);
@@ -254,7 +256,7 @@ public class SortCompareTest {
 
     @Test
     public void testQuickSort(){
-        System.out.println(Arrays.toString(arr));
+        System.out.println(Arrays.toString(getInitedArr(1000)));
         quickSort(arr, 0, arr.length - 1);
         System.out.println(Arrays.toString(arr));
         System.out.println(count);
@@ -262,7 +264,7 @@ public class SortCompareTest {
 
     @Test
     public void testHeapSort(){
-        System.out.println(Arrays.toString(arr));
+        System.out.println(Arrays.toString(getInitedArr(1000)));
         heapSort(arr);
         System.out.println(Arrays.toString(arr));
         System.out.println(count);

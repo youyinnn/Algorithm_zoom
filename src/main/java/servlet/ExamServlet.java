@@ -1,6 +1,7 @@
 package servlet;
 
 import algorithm_class.ex_1.Fibonacci;
+import algorithm_class.ex_2.SortCompareTest;
 import com.alibaba.fastjson.JSON;
 
 import javax.servlet.ServletException;
@@ -10,11 +11,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.lang.reflect.Method;
+import java.util.Arrays;
 
 /**
  * @author: youyinnn
  */
-@WebServlet("/fibonacci")
+@WebServlet("/exam")
 public class ExamServlet extends HttpServlet {
 
     private Class thisClass = this.getClass();
@@ -35,7 +37,6 @@ public class ExamServlet extends HttpServlet {
 
         Method routeMethod;
         String s = null;
-        System.out.println(Thread.currentThread());
         try {
             if (n == null) {
                 routeMethod = thisClass.getMethod(route);
@@ -93,10 +94,96 @@ public class ExamServlet extends HttpServlet {
         MsgChannel.addMsgLine("公式法计算第" + n + "个斐波那契数值为：" + a);
     }
 
-    public void stop(){
-        ThreadContainer.threadState();
-        System.out.println("stop");
-        //ThreadContainer.waitAllThread();
+    public void randomArr(long n){
+        int[] initedArr = SortCompareTest.getInitedArr((int) n);
+
+        MsgChannel.addMsgLine("随机生成的数组为："+ Arrays.toString(initedArr));
+    }
+
+    public void bubble(){
+        MsgChannel.addMsgLine(" ");
+        MsgChannel.addMsgLine("[冒泡排序算法]：");
+        MsgChannel.addMsgLine("原数组为："+ Arrays.toString(SortCompareTest.arr));
+
+        int[] brr = Arrays.copyOf(SortCompareTest.arr, SortCompareTest.arr.length);
+
+        SortCompareTest.bubbleSort(brr);
+
+        MsgChannel.addMsgLine("排序后数组为：" + Arrays.toString(brr));
+        MsgChannel.addMsgLine("比较次数为：" + SortCompareTest.count);
+        MsgChannel.addMsgLine("----------------------------------------------------");
+        SortCompareTest.count = 0;
+    }
+
+    public void select(){
+        MsgChannel.addMsgLine(" ");
+        MsgChannel.addMsgLine("[选择排序算法]：");
+        MsgChannel.addMsgLine("原数组为："+ Arrays.toString(SortCompareTest.arr));
+
+        int[] brr = Arrays.copyOf(SortCompareTest.arr, SortCompareTest.arr.length);
+
+        SortCompareTest.selectSort(brr);
+
+        MsgChannel.addMsgLine("排序后数组为：" + Arrays.toString(brr));
+        MsgChannel.addMsgLine("比较次数为：" + SortCompareTest.count);
+        MsgChannel.addMsgLine("----------------------------------------------------");
+        SortCompareTest.count = 0;
+    }
+    public void insert(){
+        MsgChannel.addMsgLine(" ");
+        MsgChannel.addMsgLine("[直接插入排序算法]：");
+        MsgChannel.addMsgLine("原数组为："+ Arrays.toString(SortCompareTest.arr));
+
+        int[] brr = Arrays.copyOf(SortCompareTest.arr, SortCompareTest.arr.length);
+
+        SortCompareTest.straightInsertionSort(brr);
+
+        MsgChannel.addMsgLine("排序后数组为：" + Arrays.toString(brr));
+        MsgChannel.addMsgLine("比较次数为：" + SortCompareTest.count);
+        MsgChannel.addMsgLine("----------------------------------------------------");
+        SortCompareTest.count = 0;
+    }
+    public void merge(){
+        MsgChannel.addMsgLine(" ");
+        MsgChannel.addMsgLine("[归并排序算法]：");
+        MsgChannel.addMsgLine("原数组为："+ Arrays.toString(SortCompareTest.arr));
+
+        int[] brr = Arrays.copyOf(SortCompareTest.arr, SortCompareTest.arr.length);
+
+        SortCompareTest.mergeSort(brr);
+
+        MsgChannel.addMsgLine("排序后数组为：" + Arrays.toString(brr));
+        MsgChannel.addMsgLine("比较次数为：" + SortCompareTest.count);
+        MsgChannel.addMsgLine("----------------------------------------------------");
+        SortCompareTest.count = 0;
+    }
+    public void quick(){
+        MsgChannel.addMsgLine(" ");
+        MsgChannel.addMsgLine("[快速排序算法]：");
+        MsgChannel.addMsgLine("原数组为："+ Arrays.toString(SortCompareTest.arr));
+
+        int[] brr = Arrays.copyOf(SortCompareTest.arr, SortCompareTest.arr.length);
+
+        SortCompareTest.quickSort(brr, 0, brr.length - 1);
+
+        MsgChannel.addMsgLine("排序后数组为：" + Arrays.toString(brr));
+        MsgChannel.addMsgLine("比较次数为：" + SortCompareTest.count);
+        MsgChannel.addMsgLine("----------------------------------------------------");
+        SortCompareTest.count = 0;
+    }
+    public void heap(){
+        MsgChannel.addMsgLine(" ");
+        MsgChannel.addMsgLine("[堆排序算法]：");
+        MsgChannel.addMsgLine("原数组为："+ Arrays.toString(SortCompareTest.arr));
+
+        int[] brr = Arrays.copyOf(SortCompareTest.arr, SortCompareTest.arr.length);
+
+        SortCompareTest.heapSort(brr);
+
+        MsgChannel.addMsgLine("排序后数组为：" + Arrays.toString(brr));
+        MsgChannel.addMsgLine("比较次数为：" + SortCompareTest.count);
+        MsgChannel.addMsgLine("----------------------------------------------------");
+        SortCompareTest.count = 0;
     }
 
 }
