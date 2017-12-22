@@ -9,7 +9,15 @@ import java.util.Arrays;
  */
 public class SortCompareTest {
 
-    private static int[] arr = {15,1,86,13,32, 8};
+    private static int[] arr = new int[1000];
+
+    static {
+        for (int i = 0 ; i < 1000 ; ++i) {
+            arr[i] = (int) (Math.random()* 1000000);
+        }
+    }
+
+    private static long count = 0;
 
     private static void swap(int[] arr, int a, int b) {
         int temp = arr[a];
@@ -29,6 +37,7 @@ public class SortCompareTest {
                 if (arr[j] > arr[j+1]) {
                     swap(arr, j, j+1);
                 }
+                count++;
             }
         }
     }
@@ -47,6 +56,7 @@ public class SortCompareTest {
                 if (arr[min] > arr[j]){
                     min = j;
                 }
+                count++;
             }
             if (i == min) {
                 break;
@@ -71,6 +81,7 @@ public class SortCompareTest {
                 arr[j+1] = arr[j];
                 j = j - 1;
                 arr[j + 1] = v;
+                count++;
             }
         }
     }
@@ -111,6 +122,7 @@ public class SortCompareTest {
                 j++;
             }
             k++;
+            count++;
         }
         int n = k;
         if (i == p) {
@@ -151,9 +163,11 @@ public class SortCompareTest {
         do {
             do {
                 i++;
-            } while (arr[i] < p);
+                count++;
+            } while (arr[i] < p && i < arr.length - 1);
             do {
                 j--;
+                count++;
             } while (arr[j] > p);
             swap(arr, i, j);
         } while (i < j);
@@ -163,44 +177,94 @@ public class SortCompareTest {
         return j;
     }
 
-    public static void heapBottomUp(int[] arr) {
-        int lastParentIndex = (arr.length - 1)/ 2;
+    /**
+     * 堆排序
+     * 分两步：
+     *  （1）堆化
+     * @param arr
+     */
+    public static void heapSort(int[] arr) {
+        for (int i = 0; i < arr.length - 1; i++) {
+            myBuildHeap(arr, arr.length - i);
+            swap(arr,0, arr.length - i - 1);
+        }
+    }
+
+    private static void myBuildHeap(int[] arr, int heapLength) {
+        int lastParentIndex = (heapLength - 2)/ 2;
+
+        for (int i = lastParentIndex ; i >= 0 ; --i) {
+            changeChild(arr, i, heapLength);
+        }
+    }
+
+    private static void changeChild(int[] arr, int parentIndex, int heapLength){
+        int leftChildIndex = parentIndex * 2 + 1;
+        int rightChileIndex = leftChildIndex + 1;
+
+        int bigChildIndex = leftChildIndex;
+        if (rightChileIndex <= heapLength -1) {
+            bigChildIndex = arr[rightChileIndex] > arr[leftChildIndex] ? rightChileIndex : leftChildIndex;
+            count++;
+        }
+
+        if (arr[bigChildIndex] > arr[parentIndex]) {
+            int temp = arr[bigChildIndex];
+            arr[bigChildIndex] = arr[parentIndex];
+            arr[parentIndex] = temp;
+            if (bigChildIndex <= (heapLength - 2) / 2) {
+                //changeChild(arr, bigChildIndex, heapLength);
+            }
+        }
+        count++;
 
     }
 
     @Test
     public void testBubble(){
+        System.out.println(Arrays.toString(arr));
         bubbleSort(arr);
         System.out.println(Arrays.toString(arr));
+        System.out.println(count);
     }
 
     @Test
     public void testSelectSort(){
+        System.out.println(Arrays.toString(arr));
         selectSort(arr);
         System.out.println(Arrays.toString(arr));
+        System.out.println(count);
     }
 
     @Test
     public void testStraightInsertionSort(){
+        System.out.println(Arrays.toString(arr));
         straightInsertionSort(arr);
         System.out.println(Arrays.toString(arr));
+        System.out.println(count);
     }
 
     @Test
     public void testMergeSort(){
+        System.out.println(Arrays.toString(arr));
         mergeSort(arr);
         System.out.println(Arrays.toString(arr));
+        System.out.println(count);
     }
 
     @Test
     public void testQuickSort(){
+        System.out.println(Arrays.toString(arr));
         quickSort(arr, 0, arr.length - 1);
         System.out.println(Arrays.toString(arr));
+        System.out.println(count);
     }
 
     @Test
     public void testHeapSort(){
-        heapBottomUp(arr);
         System.out.println(Arrays.toString(arr));
+        heapSort(arr);
+        System.out.println(Arrays.toString(arr));
+        System.out.println(count);
     }
 }
