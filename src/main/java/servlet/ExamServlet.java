@@ -95,9 +95,15 @@ public class ExamServlet extends HttpServlet {
     }
 
     public void randomArr(long n){
-        int[] initedArr = SortCompareTest.getInitedArr((int) n);
+        int[] initedArr = SortCompareTest.getRandomArr((int) n);
 
         MsgChannel.addMsgLine("随机生成的数组为："+ Arrays.toString(initedArr));
+    }
+
+    public void unRandomArr(long n){
+        int[] initedArr = SortCompareTest.getUnRandomArr((int) n);
+
+        MsgChannel.addMsgLine("生成的数组为："+ Arrays.toString(initedArr));
     }
 
     public void bubble(){
@@ -110,9 +116,9 @@ public class ExamServlet extends HttpServlet {
         SortCompareTest.bubbleSort(brr);
 
         MsgChannel.addMsgLine("排序后数组为：" + Arrays.toString(brr));
-        MsgChannel.addMsgLine("比较次数为：" + SortCompareTest.count);
+        MsgChannel.addMsgLine("比较次数为：" + SortCompareTest.compareCount);
         MsgChannel.addMsgLine("----------------------------------------------------");
-        SortCompareTest.count = 0;
+        SortCompareTest.compareCount = 0;
     }
 
     public void select(){
@@ -125,9 +131,9 @@ public class ExamServlet extends HttpServlet {
         SortCompareTest.selectSort(brr);
 
         MsgChannel.addMsgLine("排序后数组为：" + Arrays.toString(brr));
-        MsgChannel.addMsgLine("比较次数为：" + SortCompareTest.count);
+        MsgChannel.addMsgLine("比较次数为：" + SortCompareTest.compareCount);
         MsgChannel.addMsgLine("----------------------------------------------------");
-        SortCompareTest.count = 0;
+        SortCompareTest.compareCount = 0;
     }
     public void insert(){
         MsgChannel.addMsgLine(" ");
@@ -139,9 +145,9 @@ public class ExamServlet extends HttpServlet {
         SortCompareTest.straightInsertionSort(brr);
 
         MsgChannel.addMsgLine("排序后数组为：" + Arrays.toString(brr));
-        MsgChannel.addMsgLine("比较次数为：" + SortCompareTest.count);
+        MsgChannel.addMsgLine("比较次数为：" + SortCompareTest.compareCount);
         MsgChannel.addMsgLine("----------------------------------------------------");
-        SortCompareTest.count = 0;
+        SortCompareTest.compareCount = 0;
     }
     public void merge(){
         MsgChannel.addMsgLine(" ");
@@ -153,9 +159,9 @@ public class ExamServlet extends HttpServlet {
         SortCompareTest.mergeSort(brr);
 
         MsgChannel.addMsgLine("排序后数组为：" + Arrays.toString(brr));
-        MsgChannel.addMsgLine("比较次数为：" + SortCompareTest.count);
+        MsgChannel.addMsgLine("比较次数为：" + SortCompareTest.compareCount);
         MsgChannel.addMsgLine("----------------------------------------------------");
-        SortCompareTest.count = 0;
+        SortCompareTest.compareCount = 0;
     }
     public void quick(){
         MsgChannel.addMsgLine(" ");
@@ -167,9 +173,9 @@ public class ExamServlet extends HttpServlet {
         SortCompareTest.quickSort(brr, 0, brr.length - 1);
 
         MsgChannel.addMsgLine("排序后数组为：" + Arrays.toString(brr));
-        MsgChannel.addMsgLine("比较次数为：" + SortCompareTest.count);
+        MsgChannel.addMsgLine("比较次数为：" + SortCompareTest.compareCount);
         MsgChannel.addMsgLine("----------------------------------------------------");
-        SortCompareTest.count = 0;
+        SortCompareTest.compareCount = 0;
     }
     public void heap(){
         MsgChannel.addMsgLine(" ");
@@ -181,9 +187,9 @@ public class ExamServlet extends HttpServlet {
         SortCompareTest.heapSort(brr);
 
         MsgChannel.addMsgLine("排序后数组为：" + Arrays.toString(brr));
-        MsgChannel.addMsgLine("比较次数为：" + SortCompareTest.count);
+        MsgChannel.addMsgLine("比较次数为：" + SortCompareTest.compareCount);
         MsgChannel.addMsgLine("----------------------------------------------------");
-        SortCompareTest.count = 0;
+        SortCompareTest.compareCount = 0;
     }
 
 }

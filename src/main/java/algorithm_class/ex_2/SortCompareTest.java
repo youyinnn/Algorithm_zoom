@@ -11,7 +11,7 @@ public class SortCompareTest {
 
     public static int[] arr ;
 
-    public static int[] getInitedArr(int arrLength){
+    public static int[] getRandomArr(int arrLength){
         arr = new int[arrLength];
         for (int i = 0 ; i < arrLength ; ++i) {
             arr[i] = (int) (Math.random()* 1000);
@@ -19,7 +19,19 @@ public class SortCompareTest {
         return arr;
     }
 
-    public static long count = 0;
+    public static int[] getUnRandomArr(int arrLength) {
+        arr = new int[arrLength];
+        for (int i = 0; i < arrLength ; ++i) {
+            if (i < arrLength / 2) {
+                arr[i] = 1;
+            } else {
+                arr[i] = 2;
+            }
+        }
+        return arr;
+    }
+
+    public static long compareCount = 0;
 
     private static void swap(int[] arr, int a, int b) {
         int temp = arr[a];
@@ -30,7 +42,7 @@ public class SortCompareTest {
     /**
      * 冒泡排序
      * n个元素 i = 0开始
-     * 相邻元素之间两两比较，按照大小顺序作为交换，每一轮比较都把最大的元素安排到但付钱轮次的最后面
+     * 相邻元素之间两两比较，按照大小顺序作为交换，每一轮比较都把最大的元素安排到当前轮次的最后面
      * @param arr
      */
     public static void bubbleSort(int[] arr){
@@ -39,7 +51,7 @@ public class SortCompareTest {
                 if (arr[j] > arr[j+1]) {
                     swap(arr, j, j+1);
                 }
-                count++;
+                compareCount++;
             }
         }
     }
@@ -58,7 +70,7 @@ public class SortCompareTest {
                 if (arr[min] > arr[j]){
                     min = j;
                 }
-                count++;
+                compareCount++;
             }
             if (i == min) {
                 break;
@@ -83,7 +95,7 @@ public class SortCompareTest {
                 arr[j+1] = arr[j];
                 j = j - 1;
                 arr[j + 1] = v;
-                count++;
+                compareCount++;
             }
         }
     }
@@ -124,7 +136,7 @@ public class SortCompareTest {
                 j++;
             }
             k++;
-            count++;
+            compareCount++;
         }
         int n = k;
         if (i == p) {
@@ -165,11 +177,11 @@ public class SortCompareTest {
         do {
             do {
                 i++;
-                count++;
+                compareCount++;
             } while (arr[i] < p && i < arr.length - 1);
             do {
                 j--;
-                count++;
+                compareCount++;
             } while (arr[j] > p);
             swap(arr, i, j);
         } while (i < j);
@@ -207,66 +219,65 @@ public class SortCompareTest {
         int bigChildIndex = leftChildIndex;
         if (rightChileIndex <= heapLength -1) {
             bigChildIndex = arr[rightChileIndex] > arr[leftChildIndex] ? rightChileIndex : leftChildIndex;
-            count++;
+            compareCount++;
         }
 
         if (arr[bigChildIndex] > arr[parentIndex]) {
             int temp = arr[bigChildIndex];
             arr[bigChildIndex] = arr[parentIndex];
             arr[parentIndex] = temp;
-            if (bigChildIndex <= (heapLength - 2) / 2) {
-                //changeChild(arr, bigChildIndex, heapLength);
-            }
+            //if (bigChildIndex <= (heapLength - 2) / 2) {
+            //    changeChild(arr, bigChildIndex, heapLength);
+            //}
         }
-        count++;
-
+        compareCount++;
     }
 
     @Test
     public void testBubble(){
-        System.out.println(Arrays.toString(getInitedArr(1000)));
+        System.out.println(Arrays.toString(getRandomArr(1000)));
         bubbleSort(arr);
         System.out.println(Arrays.toString(arr));
-        System.out.println(count);
+        System.out.println(compareCount);
     }
 
     @Test
     public void testSelectSort(){
-        System.out.println(Arrays.toString(getInitedArr(1000)));
+        System.out.println(Arrays.toString(getRandomArr(1000)));
         selectSort(arr);
         System.out.println(Arrays.toString(arr));
-        System.out.println(count);
+        System.out.println(compareCount);
     }
 
     @Test
     public void testStraightInsertionSort(){
-        System.out.println(Arrays.toString(getInitedArr(1000)));
+        System.out.println(Arrays.toString(getRandomArr(1000)));
         straightInsertionSort(arr);
         System.out.println(Arrays.toString(arr));
-        System.out.println(count);
+        System.out.println(compareCount);
     }
 
     @Test
     public void testMergeSort(){
-        System.out.println(Arrays.toString(getInitedArr(1000)));
+        System.out.println(Arrays.toString(getRandomArr(1000)));
         mergeSort(arr);
         System.out.println(Arrays.toString(arr));
-        System.out.println(count);
+        System.out.println(compareCount);
     }
 
     @Test
     public void testQuickSort(){
-        System.out.println(Arrays.toString(getInitedArr(1000)));
+        System.out.println(Arrays.toString(getRandomArr(1000)));
         quickSort(arr, 0, arr.length - 1);
         System.out.println(Arrays.toString(arr));
-        System.out.println(count);
+        System.out.println(compareCount);
     }
 
     @Test
     public void testHeapSort(){
-        System.out.println(Arrays.toString(getInitedArr(1000)));
+        System.out.println(Arrays.toString(getRandomArr(1000)));
         heapSort(arr);
         System.out.println(Arrays.toString(arr));
-        System.out.println(count);
+        System.out.println(compareCount);
     }
 }
