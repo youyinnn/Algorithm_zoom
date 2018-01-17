@@ -128,7 +128,7 @@ public class ExamServlet extends HttpServlet {
 
         int[] brr = Arrays.copyOf(SortCompareTest.arr, SortCompareTest.arr.length);
 
-        SortCompareTest.selectSort(brr);
+        SortCompareTest.selectionSort(brr);
 
         MsgChannel.addMsgLine("排序后数组为：" + Arrays.toString(brr));
         MsgChannel.addMsgLine("比较次数为：" + SortCompareTest.compareCount);

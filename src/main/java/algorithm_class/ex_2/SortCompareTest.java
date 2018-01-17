@@ -62,7 +62,7 @@ public class SortCompareTest {
      * 每次扫描后n-i个元素 选出当前参与扫描的最小值，扫描结束后把最小值放置当前轮次的最前面
      * @param arr
      */
-    public static void selectSort(int[] arr){
+    public static void selectionSort(int[] arr){
         int min;
         for (int i = 0 ; i < arr.length - 1; ++i) {
             min = i;
@@ -244,7 +244,7 @@ public class SortCompareTest {
     @Test
     public void testSelectSort(){
         System.out.println(Arrays.toString(getRandomArr(1000)));
-        selectSort(arr);
+        selectionSort(arr);
         System.out.println(Arrays.toString(arr));
         System.out.println(compareCount);
     }
