@@ -12,13 +12,17 @@ import java.util.StringTokenizer;
  * @date: 2017/4/7
  */
 class InputReader {
-    BufferedReader buf;
-    StringTokenizer tok;
+    private BufferedReader buf;
+    private StringTokenizer tok;
+
     InputReader() {
         buf = new BufferedReader(new InputStreamReader(System.in));
     }
 
-    //不推荐使用
+    /**
+     * 不建议使用
+     * @return
+     */
     boolean hasNext() {
         while (tok == null || !tok.hasMoreElements()) {
             try {
@@ -30,22 +34,28 @@ class InputReader {
         return true;
     }
     String next() {
-        if (hasNext())
+        if (hasNext()) {
             return tok.nextToken();
+        }
         return null;
     }
+
     int nextInt() {
         return Integer.parseInt(next());
     }
+
     long nextLong() {
         return Long.parseLong(next());
     }
+
     double nextDouble() {
         return Double.parseDouble(next());
     }
+
     BigInteger nextBigInteger() {
         return new BigInteger(next());
     }
+
     BigDecimal nextBigDecimal() {
         return new BigDecimal(next());
     }
