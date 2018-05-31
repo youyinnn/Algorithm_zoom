@@ -3,6 +3,7 @@ package algorithm_class.ex_2;
 import org.junit.Test;
 
 import java.util.Arrays;
+import java.util.Random;
 
 /**
  * @author: youyinnn
@@ -12,9 +13,10 @@ public class SortCompareTest {
     public static int[] arr ;
 
     public static int[] getRandomArr(int arrLength){
+        Random random = new Random();
         arr = new int[arrLength];
         for (int i = 0 ; i < arrLength ; ++i) {
-            arr[i] = (int) (Math.random()* 1000);
+            arr[i] = (random.nextInt(9999));
         }
         return arr;
     }
@@ -48,8 +50,8 @@ public class SortCompareTest {
     public static void bubbleSort(int[] arr){
         for (int i = 0; i < arr.length - 1; ++i) {
             for (int j = 0 ; j < arr.length - 1 - i; ++j) {
-                if (arr[j] > arr[j+1]) {
-                    swap(arr, j, j+1);
+                if (arr[j] > arr[j + 1]) {
+                    swap(arr, j, j + 1);
                 }
                 compareCount++;
             }
@@ -63,19 +65,16 @@ public class SortCompareTest {
      * @param arr
      */
     public static void selectionSort(int[] arr){
-        int min;
         for (int i = 0 ; i < arr.length - 1; ++i) {
-            min = i;
+            int minIndex = i;
             for (int j = i + 1 ; j < arr.length ; ++j) {
-                if (arr[min] > arr[j]){
-                    min = j;
+                if (arr[minIndex] > arr[j]){
+                    minIndex = j;
                 }
                 compareCount++;
             }
-            if (i == min) {
-                break;
-            } else {
-                swap(arr, i, min);
+            if (minIndex != i) {
+                swap(arr, i, minIndex);
             }
         }
     }
@@ -88,14 +87,12 @@ public class SortCompareTest {
      * @param arr
      */
     public static void straightInsertionSort(int[] arr){
-        for (int i = 1 ; i < arr.length ; ++i) {
-            int key = arr[i];
-            int j = i - 1;
-            while (j >= 0 && arr[j] > key) {
-                arr[j+1] = arr[j];
-                j = j - 1;
-                arr[j + 1] = key;
-                //compareCount++;
+        for (int i = 1 ; i < arr.length ; i++) {
+            int j = i;
+            while (j > 0 && arr[j] < arr[j - 1]) {
+                swap(arr, j, j - 1);
+                compareCount++;
+                j--;
             }
         }
     }
@@ -110,11 +107,9 @@ public class SortCompareTest {
         if (arr.length > 1) {
             int[] brr = new int[arr.length/2];
             int[] crr = new int[arr.length - arr.length/2];
-            for (int i = 0 ; i < arr.length / 2 ; ++i) {
-                brr[i] = arr[i];
-            }
-            for (int i = 0 ; i < arr.length - arr.length/2 ; ++i) {
-                crr[i] = arr[arr.length/2 + i];
+            System.arraycopy(arr, 0, brr, 0, arr.length / 2);
+            if (arr.length - arr.length / 2 >= 0) {
+                System.arraycopy(arr, arr.length / 2, crr, 0, arr.length - arr.length / 2);
             }
 
             mergeSort(brr);
@@ -124,31 +119,22 @@ public class SortCompareTest {
     }
 
     private static void merge(int[] brr, int[] crr, int[] arr){
-        int p = brr.length;
-        int q = crr.length;
-        int i = 0, j = 0, k = 0;
-        while (i < p && j < q) {
-            if (brr[i] <= crr[j]) {
-                arr[k] = brr[i];
-                i++;
+        int bLength = brr.length;
+        int cLength = crr.length;
+        int aIndex = 0, cIndex = 0, bIndex = 0;
+        while (bIndex < bLength && cIndex < cLength) {
+            if (brr[bIndex] <= crr[cIndex]) {
+                arr[aIndex++] = brr[bIndex++];
             } else {
-                arr[k] = crr[j];
-                j++;
+                arr[aIndex++] = crr[cIndex++];
             }
-            k++;
             compareCount++;
         }
-        int n = k;
-        if (i == p) {
-            for (int m = j ; m < q ; ++m) {
-                arr[n] = crr[m];
-                n++;
-            }
-        } else {
-            for (int m = i ; m < p ; ++m) {
-                arr[n] = brr[m];
-                n++;
-            }
+        while (cIndex < cLength) {
+            arr[aIndex++] = crr[cIndex++];
+        }
+        while (bIndex < bLength) {
+            arr[aIndex++] = brr[bIndex++];
         }
     }
 
@@ -158,22 +144,21 @@ public class SortCompareTest {
      * 从两界向中间扫描为分裂点寻找一个合适的位置，使得分裂点左边的元素都小于等于分裂点
      * 右边的元素都大于等于分裂点，再递归以分裂点对左右两边的子数组进行划分排序
      * @param arr
-     * @param l
-     * @param r
+     * @param left
+     * @param right
      */
-    public static void quickSort(int[] arr, int l, int r) {
-        int s;
-        if (l < r) {
-            s = hoarePartition(arr, l, r);
-            quickSort(arr, l, s - 1);
-            quickSort(arr, s + 1, r);
+    public static void easyQuickSort(int[] arr, int left, int right) {
+        if (left < right) {
+            int s = hoarePartition(arr, left, right);
+            easyQuickSort(arr, left, s - 1);
+            easyQuickSort(arr, s + 1, right);
         }
     }
 
-    private static int hoarePartition(int[] arr, int l, int r) {
-        int p = arr[l];
-        int i = l;
-        int j = r + 1;
+    private static int hoarePartition(int[] arr, int left, int right) {
+        int p = arr[left];
+        int i = left;
+        int j = right + 1;
         do {
             do {
                 i++;
@@ -186,8 +171,7 @@ public class SortCompareTest {
             swap(arr, i, j);
         } while (i < j);
         swap(arr, i, j);
-        swap(arr, l, j);
-
+        swap(arr, left, j);
         return j;
     }
 
@@ -200,38 +184,70 @@ public class SortCompareTest {
      */
     public static void heapSort(int[] arr) {
         for (int i = 0; i < arr.length - 1; i++) {
-            myBuildHeap(arr, arr.length - i);
+            // 堆化
+            int heapLength = arr.length - i;
+            int lastParentIndex = (heapLength - 2)/ 2;
+            for (int j = lastParentIndex ; j >= 0 ; --j) {
+                int leftChildIndex = j * 2 + 1;
+                int rightChileIndex = leftChildIndex + 1;
+                int bigChildIndex = leftChildIndex;
+
+                if (rightChileIndex <= heapLength -1) {
+                    bigChildIndex = arr[rightChileIndex] > arr[leftChildIndex] ? rightChileIndex : leftChildIndex;
+                    compareCount++;
+                }
+                if (arr[bigChildIndex] > arr[j]) {
+                    swap(arr, bigChildIndex, j);
+                }
+                compareCount++;
+            }
+            // 删除最大键
             swap(arr,0, arr.length - i - 1);
         }
     }
 
-    private static void myBuildHeap(int[] arr, int heapLength) {
-        int lastParentIndex = (heapLength - 2)/ 2;
-
-        for (int i = lastParentIndex ; i >= 0 ; --i) {
-            changeChild(arr, i, heapLength);
+    /**
+     * 希尔排序 针对有序序列在插入时采用交换法
+     * @param arr
+     */
+    public static void shellSort1(int []arr){
+        //增量gap，并逐步缩小增量
+        for(int gap = arr.length / 2; gap > 0; gap /= 2){
+            //从第gap个元素，逐个对其所在组进行直接插入排序操作
+            for(int i = gap; i < arr.length; i++){
+                int j = i;
+                while(j - gap >= 0 && arr[j] < arr[j - gap]){
+                    //插入排序采用交换法
+                    swap(arr,j,j - gap);
+                    compareCount++;
+                    j -= gap;
+                }
+            }
         }
     }
 
-    private static void changeChild(int[] arr, int parentIndex, int heapLength){
-        int leftChildIndex = parentIndex * 2 + 1;
-        int rightChileIndex = leftChildIndex + 1;
-
-        int bigChildIndex = leftChildIndex;
-        if (rightChileIndex <= heapLength -1) {
-            bigChildIndex = arr[rightChileIndex] > arr[leftChildIndex] ? rightChileIndex : leftChildIndex;
-            compareCount++;
+    /**
+     * 希尔排序 针对有序序列在插入时采用移动法。
+     * @param arr
+     */
+    public static void shellSort2(int []arr){
+        //增量gap，并逐步缩小增量
+        for(int gap = arr.length / 2; gap > 0; gap /= 2){
+            //从第gap个元素，逐个对其所在组进行直接插入排序操作
+            for(int i = gap;i < arr.length; i++){
+                int j = i;
+                int temp = arr[j];
+                if(arr[j] < arr[j - gap]){
+                    while(j - gap >= 0 && temp < arr[j - gap]){
+                        //移动法
+                        arr[j] = arr[j - gap];
+                        compareCount++;
+                        j -= gap;
+                    }
+                    arr[j] = temp;
+                }
+            }
         }
-
-        if (arr[bigChildIndex] > arr[parentIndex]) {
-            int temp = arr[bigChildIndex];
-            arr[bigChildIndex] = arr[parentIndex];
-            arr[parentIndex] = temp;
-            //if (bigChildIndex <= (heapLength - 2) / 2) {
-            //    changeChild(arr, bigChildIndex, heapLength);
-            //}
-        }
-        compareCount++;
     }
 
     @Test
@@ -252,7 +268,7 @@ public class SortCompareTest {
 
     @Test
     public void testStraightInsertionSort(){
-        System.out.println(Arrays.toString(getRandomArr(1000)));
+        System.out.println(Arrays.toString(getRandomArr(10)));
         straightInsertionSort(arr);
         System.out.println(Arrays.toString(arr));
         System.out.println(compareCount);
@@ -260,7 +276,7 @@ public class SortCompareTest {
 
     @Test
     public void testMergeSort(){
-        System.out.println(Arrays.toString(getRandomArr(1000)));
+        System.out.println(Arrays.toString(getRandomArr(999)));
         mergeSort(arr);
         System.out.println(Arrays.toString(arr));
         System.out.println(compareCount);
@@ -269,7 +285,7 @@ public class SortCompareTest {
     @Test
     public void testQuickSort(){
         System.out.println(Arrays.toString(getRandomArr(1000)));
-        quickSort(arr, 0, arr.length - 1);
+        easyQuickSort(arr, 0, arr.length - 1);
         System.out.println(Arrays.toString(arr));
         System.out.println(compareCount);
     }
@@ -278,6 +294,22 @@ public class SortCompareTest {
     public void testHeapSort(){
         System.out.println(Arrays.toString(getRandomArr(1000)));
         heapSort(arr);
+        System.out.println(Arrays.toString(arr));
+        System.out.println(compareCount);
+    }
+
+    @Test
+    public void testShellSort1(){
+        System.out.println(Arrays.toString(getRandomArr(21)));
+        shellSort1(arr);
+        System.out.println(Arrays.toString(arr));
+        System.out.println(compareCount);
+    }
+
+    @Test
+    public void testShellSort2(){
+        System.out.println(Arrays.toString(getRandomArr(10)));
+        shellSort2(arr);
         System.out.println(Arrays.toString(arr));
         System.out.println(compareCount);
     }
