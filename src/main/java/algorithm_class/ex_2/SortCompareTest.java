@@ -313,4 +313,8 @@ public class SortCompareTest {
         System.out.println(Arrays.toString(arr));
         System.out.println(compareCount);
     }
+
+    public static void main(String[] args) {
+        System.out.println("xixi");
+    }
 }
