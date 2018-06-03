@@ -1,1 +1,0 @@
-java -jar .\Algorithm_zoom.war -p 8080 -wpth ./Algorithm_zoom.war
