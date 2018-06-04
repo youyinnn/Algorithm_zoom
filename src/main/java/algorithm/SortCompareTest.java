@@ -136,12 +136,10 @@ public class SortCompareTest {
      */
     public static void mergeSort(int[] arr) {
         if (arr.length > 1) {
-            int[] brr = new int[arr.length/2];
-            int[] crr = new int[arr.length - arr.length/2];
-            System.arraycopy(arr, 0, brr, 0, arr.length / 2);
-            if (arr.length - arr.length / 2 >= 0) {
-                System.arraycopy(arr, arr.length / 2, crr, 0, arr.length - arr.length / 2);
-            }
+            int[] brr = new int[arr.length >>> 1];
+            int[] crr = new int[arr.length - (arr.length >>> 1)];
+            System.arraycopy(arr, 0, brr, 0, arr.length >>> 1);
+            System.arraycopy(arr, arr.length / 2, crr, 0, arr.length - (arr.length >>> 1));
 
             mergeSort(brr);
             mergeSort(crr);
