@@ -185,25 +185,24 @@ public class SortCompareTest {
     }
 
     private static int hoarePartition(int[] arr, int left, int right) {
-        int partitionPoint = arr[left];
-        // leftIndex
-        int i = left;
-        // rightIndex
-        int j = right + 1;
-        do {
-            do {
-                i++;
-                compareCount++;
-            } while (arr[i] < partitionPoint && i < arr.length - 1);
-            do {
-                j--;
-                compareCount++;
-            } while (arr[j] > partitionPoint);
-            swap(arr, i, j);
-        } while (i < j);
-        swap(arr, i, j);
-        swap(arr, left, j);
-        return j;
+        int var = arr[left];
+        // 在一次快速排序中只要left的值比right小，我们就应该去移动，因为当前这次排序还没有完成
+        while (left < right) {
+            // 表示只有当前指针没有重合并且当前right指向的值大于val时，才会向左移动right
+            while (left < right && arr[right] >= var) {
+                right--;
+            }
+            // 将比val小的值赋到left
+            arr[left] = arr[right];
+            while (left < right && arr[left] <= var) {
+                left++;
+            }
+            // 将比val小的值赋到right
+            arr[right] = arr[left];
+        }
+        // 找到了所属的位置，并且将我们选定的值val赋到这个位置上去
+        arr[left] = var;
+        return right;
     }
 
     /**
