@@ -39,7 +39,7 @@ public class SortCompareTest {
         int temp = arr[a];
         arr[a] = arr[b];
         arr[b] = temp;
-        System.out.println(Arrays.toString(arr));
+        //System.out.println(Arrays.toString(arr));
     }
 
     /**
@@ -176,33 +176,31 @@ public class SortCompareTest {
      * @param left
      * @param right
      */
-    public static void easyQuickSort(int[] arr, int left, int right) {
+    public static void bothSideQuickSort(int[] arr, int left, int right) {
         if (left < right) {
-            int s = hoarePartition(arr, left, right);
-            easyQuickSort(arr, left, s - 1);
-            easyQuickSort(arr, s + 1, right);
+            int s = partition(arr, left, right);
+            bothSideQuickSort(arr, left, s - 1);
+            bothSideQuickSort(arr, s + 1, right);
         }
     }
 
-    private static int hoarePartition(int[] arr, int left, int right) {
-        int var = arr[left];
+    private static int partition(int[] arr, int left, int right) {
+        int i = left;
+        int var = arr[i];
         // 在一次快速排序中只要left的值比right小，我们就应该去移动，因为当前这次排序还没有完成
         while (left < right) {
             // 表示只有当前指针没有重合并且当前right指向的值大于val时，才会向左移动right
             while (left < right && arr[right] >= var) {
                 right--;
             }
-            // 将比val小的值赋到left
-            arr[left] = arr[right];
             while (left < right && arr[left] <= var) {
                 left++;
             }
-            // 将比val小的值赋到right
-            arr[right] = arr[left];
+            swap(arr, right, left);
         }
         // 找到了所属的位置，并且将我们选定的值val赋到这个位置上去
-        arr[left] = var;
-        return right;
+        swap(arr, i, left);
+        return left;
     }
 
     /**
@@ -291,7 +289,7 @@ public class SortCompareTest {
 
     @Test
     public void testSelectSort(){
-        System.out.println(Arrays.toString(getRandomArr(1000)));
+        System.out.println(Arrays.toString(getRandomArr(10)));
         selectionSort(arr);
         System.out.println(Arrays.toString(arr));
         System.out.println(compareCount);
@@ -323,8 +321,8 @@ public class SortCompareTest {
 
     @Test
     public void testEasyQuickSort(){
-        System.out.println(Arrays.toString(getRandomArr(50)));
-        easyQuickSort(arr, 0, arr.length - 1);
+        System.out.println(Arrays.toString(getRandomArr(10)));
+        bothSideQuickSort(arr, 0, arr.length - 1);
         System.out.println(Arrays.toString(arr));
         System.out.println(compareCount);
     }
@@ -339,7 +337,7 @@ public class SortCompareTest {
 
     @Test
     public void testShellSort1(){
-        System.out.println(Arrays.toString(getRandomArr(21)));
+        System.out.println(Arrays.toString(getRandomArr(10)));
         shellSort1(arr);
         System.out.println(Arrays.toString(arr));
         System.out.println(compareCount);
