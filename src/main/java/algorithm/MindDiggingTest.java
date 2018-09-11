@@ -8,7 +8,7 @@ import java.util.Arrays;
  * @author youyinnn
  * Date 9/1/2018
  */
-public class DPTest {
+public class MindDiggingTest {
 
     @Test
     public void testDig(){
