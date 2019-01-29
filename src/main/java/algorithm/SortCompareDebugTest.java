@@ -8,7 +8,8 @@ import java.util.Random;
 /**
  * @author: youyinnn
  */
-public class SortCompareTest {
+@SuppressWarnings("ALL")
+public class SortCompareDebugTest {
 
     public static int[] arr ;
 
@@ -39,7 +40,6 @@ public class SortCompareTest {
         int temp = arr[a];
         arr[a] = arr[b];
         arr[b] = temp;
-        //System.out.println(Arrays.toString(arr));
     }
 
     /**
@@ -49,14 +49,22 @@ public class SortCompareTest {
      * @param arr
      */
     public static void bubbleSort(int[] arr){
+        System.out.println("-----------开始排序");
         for (int i = 0; i < arr.length - 1; ++i) {
+            System.out.println("for循环A：此时 i = " + i + ", 当前数组为" + Arrays.toString(arr));
             for (int j = 0 ; j < arr.length - 1 - i; ++j) {
+                System.out.println("\t\tfor循环B：此时 i = " + i + " j = " + j + ", 当前数组为" + Arrays.toString(arr));
                 if (arr[j] > arr[j + 1]) {
+                    System.out.println("\t\t\t\tarr[j] = " + arr[j] + " 大于 arr[j + 1] = " + arr[j + 1] + ", 需要冒泡 " + arr[j] + " 和 " + arr[j + 1]);
                     swap(arr, j, j + 1);
+                    System.out.println("\t\t\t\t冒泡完, 当前数组为" + Arrays.toString(arr));
+                } else {
+                    System.out.println("\t\t\t\tarr[j] = " + arr[j] + " 不大于 arr[j + 1] = " + arr[j + 1] + ", 不需要冒泡, 当前数组为" + Arrays.toString(arr));
                 }
-                compareCount++;
             }
+            System.out.println();
         }
+        System.out.println("结束排序-----------");
     }
 
     /**
@@ -88,14 +96,20 @@ public class SortCompareTest {
      * @param arr
      */
     public static void straightInsertionSort(int[] arr){
+        System.out.println("-----------开始排序");
         for (int i = 1 ; i < arr.length ; i++) {
             int j = i;
-            while (j > 0 && arr[j] < arr[j - 1]) {
+            String s = arr[j] < arr[j - 1] ? ", a[j] = " + arr[j] + "是小于" + "a[j - 1] = " + arr[j - 1] + "的, 进入while循环": " a[j] = " + arr[j] + "是大于" + "a[j - 1] = " + arr[j - 1] + "的, 跳过while循环";
+            System.out.println("for循环：此时 i = " + i + " j = " + j + s);
+            while (j >= 0 && arr[j] < arr[j - 1]) {
+                System.out.println("\t\twhile循环：此时j = " + j +  ", 元素a[j] = " + arr[j] + "往前挤, 挤完j--, 当前数组为" + Arrays.toString(arr));
                 swap(arr, j, j - 1);
-                compareCount++;
                 j--;
             }
+            System.out.println("for循环i = " + i + "完毕, i++, 已排好前" + i + "个元素, 当前数组为" + Arrays.toString(arr));
+            System.out.println();
         }
+        System.out.println("结束排序-----------");
     }
 
     /**
@@ -136,10 +150,11 @@ public class SortCompareTest {
      */
     public static void mergeSort(int[] arr) {
         if (arr.length > 1) {
-            int[] brr = new int[arr.length >>> 1];
-            int[] crr = new int[arr.length - (arr.length >>> 1)];
-            System.arraycopy(arr, 0, brr, 0, arr.length >>> 1);
-            System.arraycopy(arr, arr.length / 2, crr, 0, arr.length - (arr.length >>> 1));
+            int half = arr.length >>> 1;
+            int[] brr = new int[half];
+            int[] crr = new int[arr.length - (half)];
+            System.arraycopy(arr, 0, brr, 0, half);
+            System.arraycopy(arr, half, crr, 0, arr.length - (half));
 
             mergeSort(brr);
             mergeSort(crr);
@@ -176,31 +191,33 @@ public class SortCompareTest {
      * @param left
      * @param right
      */
-    public static void bothSideQuickSort(int[] arr, int left, int right) {
+    public static void easyQuickSort(int[] arr, int left, int right) {
         if (left < right) {
-            int s = partition(arr, left, right);
-            bothSideQuickSort(arr, left, s - 1);
-            bothSideQuickSort(arr, s + 1, right);
+            int s = hoarePartition(arr, left, right);
+            easyQuickSort(arr, left, s - 1);
+            easyQuickSort(arr, s + 1, right);
         }
     }
 
-    private static int partition(int[] arr, int left, int right) {
-        int i = left;
-        int var = arr[i];
+    private static int hoarePartition(int[] arr, int left, int right) {
+        int var = arr[left];
         // 在一次快速排序中只要left的值比right小，我们就应该去移动，因为当前这次排序还没有完成
         while (left < right) {
             // 表示只有当前指针没有重合并且当前right指向的值大于val时，才会向左移动right
             while (left < right && arr[right] >= var) {
                 right--;
             }
+            // 将比val小的值赋到left
+            arr[left] = arr[right];
             while (left < right && arr[left] <= var) {
                 left++;
             }
-            swap(arr, right, left);
+            // 将比val小的值赋到right
+            arr[right] = arr[left];
         }
         // 找到了所属的位置，并且将我们选定的值val赋到这个位置上去
-        swap(arr, i, left);
-        return left;
+        arr[left] = var;
+        return right;
     }
 
     /**
@@ -278,93 +295,16 @@ public class SortCompareTest {
         }
     }
 
-    /**
-     * 比较计数排序
-     *
-     * @param arr
-     * @return
-     */
-    public static int[] comparisonCountingSort(int[] arr) {
-        int[] counts = new int[arr.length];
-        int[] result = new int[arr.length];
-        // 计数
-        for (int i = 0; i < arr.length - 1; i++) {
-            for (int j = i + 1; j < arr.length; j++) {
-                if (arr[i] < arr[j]) {
-                    counts[j]++;
-                } else {
-                    counts[i]++;
-                }
-            }
-        }
-        // 还原
-        for (int i = 0; i < arr.length; i++) {
-            result[counts[i]] = arr[i];
-        }
-        return result;
-    }
-
-    /**
-     * 分布计数排序
-     *
-     * @param arr
-     * @return
-     */
-    public static int[] distributionCountingSort(int[] arr) {
-        int low = arr[0];
-        int high = arr[0];
-        // 计算map的rank
-        for (int num : arr) {
-            if (low > num) {
-                low = num;
-            }
-            if (high < num) {
-                high = num;
-            }
-        }
-        // map大小为rank范围大小
-        int[] map = new int[high - low + 1];
-        int[] result = new int[arr.length];
-        // 计算分布值
-        for (int num : arr) {
-            map[num - low]++;
-        }
-        int index = 0;
-        // mapping
-        for (int i = 0; i < result.length; i++) {
-            while (map[index] == 0) {
-                index++;
-            }
-            result[i] = index + low;
-            map[index]--;
-        }
-        return result;
-    }
-
-    @Test
-    public void testComparisonCountingSort(){
-        int[] arr = {62, 31, 84, -3, 96, 19, 47, 0};
-        System.out.println(Arrays.toString(comparisonCountingSort(arr)));
-    }
-
-    @Test
-    public void testDistributionCountingSort(){
-        int[] arr = {-3, 3, 5, 1, 9, 5, 6, 2, 7, 8};
-        System.out.println(Arrays.toString(distributionCountingSort(arr)));
-    }
-
     @Test
     public void testBubble(){
-        System.out.println(Arrays.toString(getRandomArr(5)));
+        System.out.println("源数组：" + Arrays.toString(getRandomArr(5)));
         bubbleSort(arr);
-        System.out.println("*------------");
-        System.out.println(Arrays.toString(arr));
-        System.out.println(compareCount);
+        System.out.println("结果：" + Arrays.toString(arr));
     }
 
     @Test
     public void testSelectSort(){
-        System.out.println(Arrays.toString(getRandomArr(10)));
+        System.out.println(Arrays.toString(getRandomArr(5)));
         selectionSort(arr);
         System.out.println(Arrays.toString(arr));
         System.out.println(compareCount);
@@ -372,23 +312,21 @@ public class SortCompareTest {
 
     @Test
     public void testStraightInsertionSort(){
-        System.out.println(Arrays.toString(getRandomArr(10)));
+        System.out.println("源数组：" + Arrays.toString(getRandomArr(5)));
         straightInsertionSort(arr);
-        System.out.println(Arrays.toString(arr));
-        System.out.println(compareCount);
+        System.out.println("结果：" + Arrays.toString(arr));
     }
 
     @Test
     public void testBinaryInsertionSort(){
-        System.out.println(Arrays.toString(getRandomArr(10)));
+        System.out.println(Arrays.toString(getRandomArr(5)));
         binaryInsertionSort(arr);
         System.out.println(Arrays.toString(arr));
-        System.out.println(compareCount);
     }
 
     @Test
     public void testMergeSort(){
-        System.out.println(Arrays.toString(getRandomArr(999)));
+        System.out.println(Arrays.toString(getRandomArr(5)));
         mergeSort(arr);
         System.out.println(Arrays.toString(arr));
         System.out.println(compareCount);
@@ -396,8 +334,8 @@ public class SortCompareTest {
 
     @Test
     public void testEasyQuickSort(){
-        System.out.println(Arrays.toString(getRandomArr(10)));
-        bothSideQuickSort(arr, 0, arr.length - 1);
+        System.out.println(Arrays.toString(getRandomArr(50)));
+        easyQuickSort(arr, 0, arr.length - 1);
         System.out.println(Arrays.toString(arr));
         System.out.println(compareCount);
     }
@@ -412,7 +350,7 @@ public class SortCompareTest {
 
     @Test
     public void testShellSort1(){
-        System.out.println(Arrays.toString(getRandomArr(10)));
+        System.out.println(Arrays.toString(getRandomArr(7)));
         shellSort1(arr);
         System.out.println(Arrays.toString(arr));
         System.out.println(compareCount);
