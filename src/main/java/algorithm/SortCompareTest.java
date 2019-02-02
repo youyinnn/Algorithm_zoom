@@ -3,6 +3,7 @@ package algorithm;
 import org.junit.Test;
 
 import java.util.Arrays;
+import java.util.LinkedList;
 import java.util.Random;
 
 /**
@@ -304,6 +305,8 @@ public class SortCompareTest {
         return result;
     }
 
+
+
     /**
      * 分布计数排序
      *
@@ -313,7 +316,7 @@ public class SortCompareTest {
     public static int[] distributionCountingSort(int[] arr) {
         int low = arr[0];
         int high = arr[0];
-        // 计算map的rank
+        // calculate rank
         for (int num : arr) {
             if (low > num) {
                 low = num;
@@ -322,21 +325,55 @@ public class SortCompareTest {
                 high = num;
             }
         }
-        // map大小为rank范围大小
-        int[] map = new int[high - low + 1];
+        // distribution rate in rank
+        int[] disRate = new int[high - low + 1];
         int[] result = new int[arr.length];
-        // 计算分布值
+        // calculate distribution rate
         for (int num : arr) {
-            map[num - low]++;
+            disRate[num - low]++;
         }
         int index = 0;
-        // mapping
+        // consume the distribution rate with order
         for (int i = 0; i < result.length; i++) {
-            while (map[index] == 0) {
+            while (disRate[index] == 0) {
                 index++;
             }
             result[i] = index + low;
-            map[index]--;
+            disRate[index]--;
+        }
+        return result;
+    }
+
+    public static int[] distributionCountingSort2(int[] arr) {
+        int low = arr[0];
+        int high = arr[0];
+        // calculate rank
+        for (int num : arr) {
+            if (low > num) {
+                low = num;
+            }
+            if (high < num) {
+                high = num;
+            }
+        }
+        // distribution rate in rank
+        LinkedList[] disRate = new LinkedList[high - low + 1];
+        int[] result = new int[arr.length];
+        // calculate distribution rate
+        for (int num : arr) {
+            if (disRate[num - low] == null) {
+                disRate[num - low] = new LinkedList<Integer>();
+            }
+            disRate[num - low].add(num);
+        }
+        int index = 0;
+        // consume the distribution rate with order
+        for (LinkedList queue : disRate) {
+            if (queue != null) {
+                while (!queue.isEmpty()) {
+                    result[index++] = (int) queue.poll();
+                }
+            }
         }
         return result;
     }
@@ -345,12 +382,20 @@ public class SortCompareTest {
     public void testComparisonCountingSort(){
         int[] arr = {62, 31, 84, -3, 96, 19, 47, 0};
         System.out.println(Arrays.toString(comparisonCountingSort(arr)));
+        int[] arr2 = {2, 2, 2, 2, 2};
+        System.out.println(Arrays.toString(comparisonCountingSort(arr2)));
     }
 
     @Test
     public void testDistributionCountingSort(){
         int[] arr = {-3, 3, 5, 1, 9, 5, 6, 2, 7, 8};
         System.out.println(Arrays.toString(distributionCountingSort(arr)));
+    }
+
+    @Test
+    public void testDistributionCountingSort2(){
+        int[] arr = {-3, 3, 5, 1, 9, 5, 6, 2, 7, 50000000, 80000000};
+        System.out.println(Arrays.toString(distributionCountingSort2(arr)));
     }
 
     @Test
