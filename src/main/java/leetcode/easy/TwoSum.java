@@ -1,4 +1,4 @@
-package leetcode;
+package leetcode.easy;
 
 import org.junit.Test;
 
