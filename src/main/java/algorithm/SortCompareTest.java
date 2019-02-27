@@ -212,17 +212,18 @@ public class SortCompareTest {
      * @param arr
      */
     public static void heapSort(int[] arr) {
+        // 逐渐减小堆规模 直到规模为1
         for (int i = 0; i < arr.length - 1; i++) {
-            // 堆化
             int heapLength = arr.length - i;
             int lastParentIndex = (heapLength - 2)/ 2;
+            // 堆化
             for (int j = lastParentIndex ; j >= 0 ; --j) {
                 int leftChildIndex = j * 2 + 1;
                 int rightChileIndex = leftChildIndex + 1;
                 int bigChildIndex = leftChildIndex;
-
-                if (rightChileIndex <= heapLength -1) {
-                    bigChildIndex = arr[rightChileIndex] > arr[leftChildIndex] ? rightChileIndex : leftChildIndex;
+                if (rightChileIndex < heapLength
+                        && arr[rightChileIndex] > arr[leftChildIndex]) {
+                    bigChildIndex = rightChileIndex;
                     compareCount++;
                 }
                 if (arr[bigChildIndex] > arr[j]) {
@@ -231,7 +232,7 @@ public class SortCompareTest {
                 compareCount++;
             }
             // 删除最大键
-            swap(arr,0, arr.length - i - 1);
+            swap(arr,0, heapLength - 1);
         }
     }
 
@@ -449,7 +450,7 @@ public class SortCompareTest {
 
     @Test
     public void testHeapSort(){
-        System.out.println(Arrays.toString(getRandomArr(1000)));
+        System.out.println(Arrays.toString(getRandomArr(10)));
         heapSort(arr);
         System.out.println(Arrays.toString(arr));
         System.out.println(compareCount);
