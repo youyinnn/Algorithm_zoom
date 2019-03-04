@@ -1,5 +1,6 @@
 package leetcode.medium;
 
+import leetcode.element.ListNode;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -8,19 +9,6 @@ import org.junit.Test;
  * Date 2/4/2019
  */
 public class AddTwoNumbers {
-
-    class ListNode {
-        int val;
-        ListNode next;
-        ListNode(int x) { val = x; }
-
-        @Override
-        public String toString() {
-            return "[" + val +
-                    ", ->" + next +
-                    ']';
-        }
-    }
 
     public ListNode addTwoNumbers(ListNode l1, ListNode l2) {
         ListNode l1now = l1;
