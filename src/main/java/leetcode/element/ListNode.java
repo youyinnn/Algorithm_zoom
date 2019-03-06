@@ -29,12 +29,23 @@ public class ListNode {
     }
 
     public void print() {
+        System.out.println(toString(this));
+    }
+
+    public static String toString(ListNode node) {
+        if (node == null) {
+            return null;
+        }
         StringJoiner js = new StringJoiner("->");
-        ListNode tmp = this;
+        ListNode tmp = node;
         while (tmp != null) {
             js.add(String.valueOf(tmp.val));
             tmp = tmp.next;
         }
-        System.out.println(js.toString());
+        return js.toString();
+    }
+
+    public static void print(ListNode node) {
+        System.out.println(toString(node));
     }
 }

@@ -197,6 +197,33 @@ public class MergeKSortedLists {
 
     @Test
     public void test3(){
-        mergeKLists(ls2).print();
+        mergeKLists3(ls2).print();
+    }
+
+    public ListNode mergeKLists4(ListNode[] lists) {
+        return mergeSort(lists, 0, lists.length - 1);
+    }
+
+    private ListNode mergeSort(ListNode[] lists, int start, int end) {
+        int length = end - start + 1;
+        if (lists.length == 0) {
+            return null;
+        }
+        if (length == 1) {
+            return lists[start];
+        }
+        if (length == 2) {
+            return mergeTwoLists(lists[start], lists[end]);
+        } else {
+            int mid = (length / 2) + start;
+            ListNode right = mergeSort(lists, start, mid);
+            ListNode left = mergeSort(lists, mid + 1, end);
+            return mergeTwoLists(right, left);
+        }
+    }
+
+    @Test
+    public void test4(){
+        mergeKLists4(ls2).print();
     }
 }
