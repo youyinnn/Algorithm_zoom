@@ -29,6 +29,10 @@ public class LetterCombinationOfAPhoneNumber {
             {'w','x','y','z'}, // 9
     };
 
+    private static char[] mapping(char digitalChar) {
+        return map[digitalChar - '0'];
+    }
+
     public static List<String> letterCombinations(String digits) {
         if (digits.isEmpty()) {
             return Collections.emptyList();
@@ -62,9 +66,5 @@ public class LetterCombinationOfAPhoneNumber {
             }
         }
         return ans;
-    }
-
-    private static char[] mapping(char digitalChar) {
-        return map[digitalChar - '0'];
     }
 }
