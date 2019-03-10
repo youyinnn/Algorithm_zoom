@@ -1,4 +1,4 @@
-package algorithm;
+package algorithm.dp;
 
 import org.junit.Test;
 

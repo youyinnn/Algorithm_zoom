@@ -1,4 +1,4 @@
-package algorithm;
+package algorithm.dp;
 
 /**
  * 有硬币d1-dj，且d1 < d2 < d3 < ... < dj，其中d1=1
