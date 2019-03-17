@@ -30,7 +30,17 @@ public class SearchInRotatedSortedArray {
             rs = Arrays.binarySearch(nums, target);
             return rs < 0 ? -1 : rs;
         }
+        int pivot = findPivot(nums);
 
+        if (nums[pivot] <= target && nums[nums.length - 1] >= target) {
+            rs = Arrays.binarySearch(nums, pivot, nums.length, target);
+        } else {
+            rs = Arrays.binarySearch(nums, 0, pivot, target);
+        }
+        return rs < 0 ? -1 : rs;
+    }
+
+    private static int findPivot(int[] nums) {
         int low = 0;
         int high = nums.length - 1;
         int mid;
@@ -45,13 +55,15 @@ public class SearchInRotatedSortedArray {
                 high = mid;
             }
         }
+        return low;
+    }
 
-        if (nums[low] <= target && nums[nums.length - 1] >= target) {
-            rs = Arrays.binarySearch(nums, low, nums.length, target);
-        } else {
-            rs = Arrays.binarySearch(nums, 0, low, target);
-        }
-        return rs < 0 ? -1 : rs;
+    @Test
+    public void testFindPivot(){
+        assertEquals(0, findPivot(new int[]{0,1,2,3}));
+        assertEquals(1, findPivot(new int[]{3,0,1,2}));
+        assertEquals(2, findPivot(new int[]{2,3,0,1}));
+        assertEquals(3, findPivot(new int[]{1,2,3,0}));
     }
 
     @Test
