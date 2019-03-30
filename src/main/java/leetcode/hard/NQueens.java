@@ -21,8 +21,6 @@ public class NQueens {
         return ans;
     }
 
-
-
     private void backtracking(List<List<String>> ans, List<String> cb, int n, int row) {
         if (row == n) {
             ans.add(new ArrayList<>(cb));
@@ -90,4 +88,42 @@ public class NQueens {
         }
     }
 
+    public List<List<String>> solveNQueens2(int n) {
+        List<List<String>> ans = new ArrayList<>();
+        backtracking2(ans, new ArrayList<>(), new boolean[n], new boolean[n * 2], new boolean[n * 2], n, 0);
+        return ans;
+    }
+
+    private void backtracking2(List<List<String>> ans, List<String> cb,
+                               boolean[] colSet, boolean[] dlSet, boolean[] drSet, int n, int row) {
+        if (row == n) {
+            ans.add(new ArrayList<>(cb));
+        } else {
+            for (int col = 0; col < n; col++) {
+                int dli = col - row + n;
+                int dri = col + row;
+                if (colSet[col] || dlSet[dli] || drSet[dri]) {
+                    continue;
+                }
+                colSet[col] = dlSet[dli] = drSet[dri] =  true;
+                char[] css = new char[n];
+                Arrays.fill(css, '.');
+                css[col] = 'Q';
+                cb.add(String.valueOf(css));
+                backtracking2(ans, cb, colSet, dlSet, drSet, n, row + 1);
+                cb.remove(cb.size() - 1);
+                colSet[col] = dlSet[dli] = drSet[dri] =  false;
+            }
+        }
+    }
+
+    @Test
+    public void test2(){
+        List<List<String>> lists = solveNQueens2(4);
+
+        for (List<String> list : lists) {
+            printCb(list);
+            System.out.println("--------");
+        }
+    }
 }

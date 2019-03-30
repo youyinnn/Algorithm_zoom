@@ -21,8 +21,6 @@ public class NQueens {
         return ans;
     }
 
-
-
     private void backtracking(List<List<String>> ans, List<String> cb, int n, int row) {
         if (row == n) {
             ans.add(new ArrayList<>(cb));

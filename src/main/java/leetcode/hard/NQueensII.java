@@ -51,4 +51,31 @@ public class NQueensII {
         return true;
     }
 
+    boolean[] colSet, drSet, dlSet;
+
+    public int totalNQueens2(int n) {
+        colSet = new boolean[n];
+        drSet = new boolean[n * 2];
+        dlSet = new boolean[n * 2];
+        backtracking(n, 0);
+        return ans;
+    }
+
+    private void backtracking(int n, int row) {
+        if (row == n) {
+            ans++;
+        } else {
+            for (int col = 0; col < n; col++) {
+                int dli = col - row + n;
+                int dri = col + row;
+                if (colSet[col] || drSet[dri] || dlSet[dli]) {
+                    continue;
+                }
+                colSet[col] = drSet[dri] = dlSet[dli] = true;
+                backtracking(n, row + 1);
+                colSet[col] = drSet[dri] = dlSet[dli] = false;
+            }
+        }
+    }
+
 }
