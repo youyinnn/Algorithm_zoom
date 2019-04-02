@@ -4,6 +4,8 @@ import org.junit.Test;
 
 import java.util.Arrays;
 
+import static org.junit.Assert.assertEquals;
+
 /**
  * @author youyinnn
  * Date 3/31/2019
@@ -52,10 +54,10 @@ public class UniquePathII {
 
     @Test
     public void test(){
-        System.out.println(uniquePathsWithObstacles(ob));
-        System.out.println(uniquePathsWithObstacles(ob2));
-        System.out.println(uniquePathsWithObstacles(new int[][]{{1}}));
-        System.out.println(uniquePathsWithObstacles(new int[][]{{0},{0},{0},{0},{1}}));
-        System.out.println(uniquePathsWithObstacles(new int[][]{{1},{0},{0},{0},{0}}));
+        assertEquals(2, (uniquePathsWithObstacles(ob)));
+        assertEquals(6, uniquePathsWithObstacles(ob2));
+        assertEquals(0, uniquePathsWithObstacles(new int[][]{{1}}));
+        assertEquals(0, uniquePathsWithObstacles(new int[][]{{0},{0},{0},{0},{1}}));
+        assertEquals(0, uniquePathsWithObstacles(new int[][]{{1},{0},{0},{0},{0}}));
     }
 }
