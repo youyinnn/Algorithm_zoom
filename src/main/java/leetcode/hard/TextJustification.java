@@ -76,5 +76,7 @@ public class TextJustification {
     public void test(){
         System.out.println(fullJustify(new String[]{"Science", "is", "what", "we", "understand", "well", "enough", "to", "explain",
                 "to", "a", "computer.", "Art", "is", "everything", "else", "we", "do"}, 20));
+
+        System.out.println(fullJustify(new String[]{"aaa", "aaa", "aaa", "aaa", "aaa"}, 6));
     }
 }
