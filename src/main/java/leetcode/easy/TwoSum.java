@@ -190,7 +190,6 @@ public class TwoSum {
 
     public int[] twoSum3(int[] nums, int target) {
         setTable(nums);
-        System.out.println(Arrays.toString(table));
         for (int i = 0; i < nums.length; i++) {
             int complement = target - nums[i];
             int seek = seek(complement);

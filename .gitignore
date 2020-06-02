@@ -1,0 +1,7 @@
+target
+output
+build
+dist
+.settings
+.classpath
+.project
