@@ -72,4 +72,38 @@ public class RemoveNthNodeFromEndOfList {
         removeNthFromEnd2(ListNode.arr2List(1, 2, 3, 4, 5), 2).print();
         removeNthFromEnd2(ListNode.arr2List(1, 2, 3, 4, 5), 5).print();
     }
+
+    public ListNode removeNthFromEnd3(ListNode head, int n) {
+        if (head == null || head.next == null) return null;
+        ListNode p1 = head, p2 = head, pre = head;
+        while (p1 != null) {
+            if (n != 0) {
+                n--;
+            } else {
+                pre = p2;
+                p2 = p2.next;    
+            }
+            p1 = p1.next;
+        }
+        if (p2 == head) {
+            return head.next;
+        }
+        pre.next = p2.next;
+        return head;
+    }
+
+    @Test
+    public void test3(){
+        removeNthFromEnd3(ListNode.arr2List(1, 2, 3, 4, 5), 1).print();
+        removeNthFromEnd3(ListNode.arr2List(1, 2, 3, 4, 5), 2).print();
+        removeNthFromEnd3(ListNode.arr2List(1, 2, 3, 4, 5), 3).print();
+        removeNthFromEnd3(ListNode.arr2List(1, 2, 3, 4, 5), 4).print();
+        removeNthFromEnd3(ListNode.arr2List(1, 2, 3, 4, 5), 5).print();
+    }
+
+    @Test
+    public void test4() {
+        System.out.println(removeNthFromEnd3(ListNode.arr2List(1), 1));
+        System.out.println(removeNthFromEnd3(ListNode.arr2List(0), 0));
+    }
 }
