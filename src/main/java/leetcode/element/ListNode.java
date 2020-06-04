@@ -45,6 +45,11 @@ public class ListNode {
         return js.toString();
     }
 
+    @Override
+    public String toString() {
+        return toString(this);
+    }
+
     public static void print(ListNode node) {
         System.out.println(toString(node));
     }
