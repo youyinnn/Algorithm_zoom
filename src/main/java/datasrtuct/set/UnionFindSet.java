@@ -58,7 +58,7 @@ public class UnionFindSet {
     }
 
     public boolean isRelated(int x, int y) {
-        return findFather(x)== findFather(y);
+        return findFather(x) == findFather(y);
     }
 
     public static void main(String[] args) {

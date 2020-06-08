@@ -2,8 +2,6 @@ package leetcode.race.week192;
 
 import java.util.Stack;
 
-import org.junit.Test;
-
 public class BrowserHistory {
 
     private String currentPage;
@@ -21,25 +19,21 @@ public class BrowserHistory {
     }
     
     public String back(int steps) {
-        String tmp = currentPage;
         while (!bStack.empty() && steps != 0) {
-            tmp = bStack.pop();
+            currentPage = bStack.pop();
             fStack.push(currentPage);
-            currentPage = tmp;
             steps--;
         }
-        return tmp;
+        return currentPage;
     }
     
     public String forward(int steps) {
-        String tmp = currentPage;
         while (!fStack.empty() && steps != 0) {
-            tmp = fStack.pop();
+            currentPage = fStack.pop();
             bStack.push(currentPage);
-            currentPage = tmp;
             steps--;
         }
-        return tmp;
+        return currentPage;
     }
 
     public static void main(String[] args) {
