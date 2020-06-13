@@ -207,33 +207,33 @@ public class SortCompareTest {
     /**
      * 堆排序
      * 分两步：
-     *  （1）堆化
+     *  （1）大顶堆化
      *  （2）删除最大键
      * @param arr
      */
     public static void heapSort(int[] arr) {
-        // 逐渐减小堆规模 直到规模为1
-        for (int i = 0; i < arr.length - 1; i++) {
-            int heapLength = arr.length - i;
-            int lastParentIndex = (heapLength - 2)/ 2;
-            // 堆化
-            for (int j = lastParentIndex ; j >= 0 ; --j) {
-                int leftChildIndex = j * 2 + 1;
-                int rightChileIndex = leftChildIndex + 1;
-                int bigChildIndex = leftChildIndex;
-                if (rightChileIndex < heapLength
-                        && arr[rightChileIndex] > arr[leftChildIndex]) {
-                    bigChildIndex = rightChileIndex;
-                    compareCount++;
-                }
-                if (arr[bigChildIndex] > arr[j]) {
-                    swap(arr, bigChildIndex, j);
-                }
-                compareCount++;
-            }
-            // 删除最大键
-            swap(arr,0, heapLength - 1);
+        for (int i = arr.length / 2 - 1; i >= 0; i--) {
+            percDown(arr, i, arr.length);
         }
+        for (int i = arr.length - 1; i > 0; i--) {
+            swap(arr, 0, i);
+            percDown(arr, 0, i);
+        }
+    }
+
+    public static void percDown(int[] arr, int hole, int nowSize) {
+        int child;
+        int tmp = arr[hole];
+        for (; hole * 2 + 1 < nowSize; hole = child) {
+            child = hole * 2 + 1;
+            if (child != nowSize - 1 && arr[child] < arr[child + 1]) {
+                child++;
+            }
+            if (tmp < arr[child]) {
+                arr[hole] = arr[child];
+            } else break;
+        }
+        arr[hole] = tmp;
     }
 
     /**
@@ -358,7 +358,7 @@ public class SortCompareTest {
             }
         }
         // distribution rate in rank
-        LinkedList[] disRate = new LinkedList[high - low + 1];
+        LinkedList<Integer>[] disRate = new LinkedList[high - low + 1];
         int[] result = new int[arr.length];
         // calculate distribution rate
         for (int num : arr) {
@@ -369,7 +369,7 @@ public class SortCompareTest {
         }
         int index = 0;
         // consume the distribution rate with order
-        for (LinkedList queue : disRate) {
+        for (LinkedList<Integer> queue : disRate) {
             if (queue != null) {
                 while (!queue.isEmpty()) {
                     result[index++] = (int) queue.poll();

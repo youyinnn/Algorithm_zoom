@@ -101,7 +101,7 @@ public class SortCompareDebugTest {
             int j = i;
             String s = arr[j] < arr[j - 1] ? ", a[j] = " + arr[j] + "是小于" + "a[j - 1] = " + arr[j - 1] + "的, 进入while循环": " a[j] = " + arr[j] + "是大于" + "a[j - 1] = " + arr[j - 1] + "的, 跳过while循环";
             System.out.println("for循环：此时 i = " + i + " j = " + j + s);
-            while (j >= 0 && arr[j] < arr[j - 1]) {
+            while (j > 0 && arr[j] < arr[j - 1]) {
                 System.out.println("\t\twhile循环：此时j = " + j +  ", 元素a[j] = " + arr[j] + "往前挤, 挤完j--, 当前数组为" + Arrays.toString(arr));
                 swap(arr, j, j - 1);
                 j--;
