@@ -31,7 +31,7 @@ public class BinaryTree {
         }
     }
 
-    public void breathFirstTraversal(Node root) {
+    public void breadthFirstTraversal(Node root) {
         LinkedList<Node> q = new LinkedList<>();
         q.add(root);
         while (!q.isEmpty()) {
@@ -109,6 +109,13 @@ public class BinaryTree {
 
     @Before
     public void set(){
+        /**
+         *           1
+         *       2      3
+         *    4    5  @    6
+         *  @  @ 7  8
+         */
+
         root = node(1);
 
         root.left = node(2);
@@ -124,7 +131,7 @@ public class BinaryTree {
 
     @Test
     public void testBFT(){
-        breathFirstTraversal(root);
+        breadthFirstTraversal(root);
     }
 
     @Test
