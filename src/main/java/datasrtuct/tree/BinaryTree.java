@@ -293,7 +293,7 @@ public class BinaryTree {
         System.out.println(hasPathSum(node(6), 6));
     }
 
-    public TreeNode buildTree(int[] inorder, int[] postorder) {
+    public TreeNode buildTreeWithPostAndIn(int[] inorder, int[] postorder) {
         if (inorder.length == 0) return null;
         int length = inorder.length;
         return getTreeNode(inorder, postorder, 0, length - 1, 0, length - 1);
@@ -332,14 +332,42 @@ public class BinaryTree {
     public void testBuildTree() {
         int[] io = {9,3,15,20,7};
         int[] po = {9,15,7,20,3};
-        System.out.println(buildTree(io, po));
+        System.out.println(buildTreeWithPostAndIn(io, po));
     }
 
     @Test
     public void testBuildTree2() {
         int[] io = {9,3};
         int[] po = {9,3};
-        System.out.println(buildTree(io, po));
+        System.out.println(buildTreeWithPostAndIn(io, po));
+    }
+
+    public TreeNode buildTreeWithPreAndIn(int[] preorder, int[] inorder) {
+        if (inorder.length == 0) return null;
+        int le = inorder.length;
+        return getNode(preorder, inorder, 0, le - 1, 0, le - 1);
+    }
+    
+    public TreeNode getNode(int[] pod, int[] iod, int ps, int pe, int is, int ie) {
+        if (is > ie) return null;
+        if (is == ie) return new TreeNode(iod[ie]);
+        int root = pod[ps];
+        int rootIndexInInorder = findIndex(iod, is, ie, root);
+        int leftLe = rootIndexInInorder - is;
+        TreeNode left  = getNode(pod, iod,
+                                 ps + 1,
+                                 ps + leftLe,
+                                 is,
+                                 rootIndexInInorder - 1);
+        TreeNode right = getNode(pod, iod,
+                                 ps + 1 + leftLe,
+                                 pe,
+                                 rootIndexInInorder + 1,
+                                 ie);
+        TreeNode mid = new TreeNode(root);
+        mid.left  = left;
+        mid.right = right;
+        return mid;
     }
 
 }
